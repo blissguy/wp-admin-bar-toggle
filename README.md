@@ -138,7 +138,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Acknowledgments
 
 - Original concept by [Eran Schoellhorn](https://github.com/EranSch)
-- Modernized and maintained by [Emmanuel Kuebu](https://github.com/emmanuelkuebu)
+- Modernized and maintained by [Emmanuel Kuebu](https://github.com/blissguy/)
 - Built with modern web technologies and Chrome extension best practices
 
 ---
