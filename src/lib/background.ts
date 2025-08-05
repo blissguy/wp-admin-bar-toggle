@@ -98,6 +98,12 @@ class WpAdminBarManager {
           if (html) {
             html.style.setProperty("margin-top", "0px", "important");
             html.style.setProperty("padding-top", "0px", "important");
+            // Set WordPress admin bar height CSS variable to 0
+            html.style.setProperty(
+              "--wp-admin--admin-bar--height",
+              "0px",
+              "important"
+            );
           }
 
           const body = document.getElementsByTagName("body")[0];
@@ -129,6 +135,8 @@ class WpAdminBarManager {
           const html = document.getElementsByTagName("html")[0];
           if (html) {
             html.removeAttribute("style");
+            // Remove the WordPress admin bar height CSS variable override
+            html.style.removeProperty("--wp-admin--admin-bar--height");
           }
 
           const body = document.getElementsByTagName("body")[0];
