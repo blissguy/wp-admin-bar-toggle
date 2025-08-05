@@ -29,7 +29,7 @@ A powerful Chrome extension that allows you to hide and show the WordPress admin
 
 ```bash
 # Clone the repository
-git clone https://github.com/emmanuelkuebu/wp-admin-bar-toggle.git
+git clone https://github.com/blissguy/wp-admin-bar-toggle.git
 cd wp-admin-bar-toggle
 
 # Install dependencies
