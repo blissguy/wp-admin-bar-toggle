@@ -1,0 +1,95 @@
+name: Build and Release Chrome Extension
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v2.0.1)'
+        required: true
+        default: 'v2.0.0'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Type check
+        run: npm run type-check
+        
+      - name: Lint code
+        run: npm run lint
+        
+      - name: Build extension
+        run: npm run build
+        
+      - name: Create release package
+        run: |
+          cd dist
+          zip -r ../wp-admin-bar-toggle-${{ github.ref_name }}.zip .
+          cd ..
+          
+      - name: Verify package contents
+        run: |
+          echo "Package contents:"
+          unzip -l wp-admin-bar-toggle-${{ github.ref_name }}.zip
+          
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: WordPress Admin Bar Toggle ${{ github.ref_name }}
+          body: |
+            ## WordPress Admin Bar Toggle ${{ github.ref_name }}
+            
+            ### Chrome Web Store Ready Package
+            
+            This release contains a production-ready Chrome extension package for submission to the Chrome Web Store.
+            
+            ### Features
+            - ✅ Manifest V3 compliant
+            - ✅ TypeScript with full type safety
+            - ✅ Modern build system with Vite
+            - ✅ Enhanced security and performance
+            - ✅ Per-domain WordPress admin bar toggle
+            
+            ### Installation
+            1. Download the `wp-admin-bar-toggle-${{ github.ref_name }}.zip` file
+            2. Extract if needed (for development)
+            3. For Chrome Web Store: Upload the ZIP directly
+            4. For manual installation: Load unpacked from extracted folder
+            
+            ### Requirements
+            - Chrome 88+ (Manifest V3 support)
+            - WordPress sites with admin bar
+            
+            ### Changes
+            See commit history for detailed changes in this release.
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./wp-admin-bar-toggle-${{ github.ref_name }}.zip
+          asset_name: wp-admin-bar-toggle-${{ github.ref_name }}.zip
+          asset_content_type: application/zip

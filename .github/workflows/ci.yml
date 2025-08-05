@@ -1,0 +1,58 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18, 20]
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Type check
+        run: npm run type-check
+        
+      - name: Lint code
+        run: npm run lint
+        
+      - name: Build extension
+        run: npm run build
+        
+      - name: Verify build output
+        run: |
+          echo "Build output verification:"
+          ls -la dist/
+          echo "Manifest content:"
+          cat dist/manifest.json
+          echo "Background script size:"
+          ls -lh dist/background.js
+          
+      - name: Test extension structure
+        run: |
+          # Verify required files exist
+          test -f dist/manifest.json || exit 1
+          test -f dist/background.js || exit 1
+          test -d dist/img || exit 1
+          
+          # Verify manifest version
+          grep -q '"manifest_version": 3' dist/manifest.json || exit 1
+          
+          echo "✅ Extension structure verification passed"
