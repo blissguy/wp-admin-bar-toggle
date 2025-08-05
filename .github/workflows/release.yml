@@ -11,6 +11,9 @@ on:
         required: true
         default: 'v2.0.0'
 
+permissions:
+  contents: write
+  
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -49,14 +52,12 @@ jobs:
           unzip -l wp-admin-bar-toggle-${{ github.ref_name }}.zip
           
       - name: Create Release
-        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: WordPress Admin Bar Toggle ${{ github.ref_name }}
-          body: |
-            ## WordPress Admin Bar Toggle ${{ github.ref_name }}
+        run: |
+          gh release create ${{ github.ref_name }} \
+            --title "WordPress Admin Bar Toggle ${{ github.ref_name }}" \
+            --notes "## WordPress Admin Bar Toggle ${{ github.ref_name }}
             
             ### Chrome Web Store Ready Package
             
@@ -70,7 +71,7 @@ jobs:
             - ✅ Per-domain WordPress admin bar toggle
             
             ### Installation
-            1. Download the `wp-admin-bar-toggle-${{ github.ref_name }}.zip` file
+            1. Download the \`wp-admin-bar-toggle-${{ github.ref_name }}.zip\` file
             2. Extract if needed (for development)
             3. For Chrome Web Store: Upload the ZIP directly
             4. For manual installation: Load unpacked from extracted folder
@@ -80,16 +81,5 @@ jobs:
             - WordPress sites with admin bar
             
             ### Changes
-            See commit history for detailed changes in this release.
-          draft: false
-          prerelease: false
-          
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./wp-admin-bar-toggle-${{ github.ref_name }}.zip
-          asset_name: wp-admin-bar-toggle-${{ github.ref_name }}.zip
-          asset_content_type: application/zip
+            See commit history for detailed changes in this release." \
+            wp-admin-bar-toggle-${{ github.ref_name }}.zip
