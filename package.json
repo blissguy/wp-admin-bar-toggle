@@ -1,5 +1,5 @@
 {
-  "name": "wp-admin-bar-hide",
+  "name": "wp-admin-bar-toggle",
   "version": "2.0.0",
   "description": "Modern WordPress Admin Bar Control Chrome Extension with Manifest V3",
   "type": "module",
