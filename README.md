@@ -1,8 +1,8 @@
-# WordPress Admin Bar Control - Modern Chrome Extension
+# WordPress Admin Bar Toggle - Modern Chrome Extension
 
 > **Modernized for 2025** - Now featuring Manifest V3, TypeScript, Vite build system, and modern ES2022+ code!
 
-A powerful Chrome extension that allows you to hide and show the WordPress admin bar with just one click, on a per-domain basis. Perfect for developers and designers who need to switch between editing and design modes quickly.
+A powerful Chrome extension that allows you to hide and show the WordPress admin bar with just one click, on a per-domain basis.
 
 ## Features
 

@@ -1,7 +1,7 @@
 {
   "name": "wp-admin-bar-toggle",
   "version": "2.0.0",
-  "description": "Modern WordPress Admin Bar Control Chrome Extension with Manifest V3",
+  "description": "Easily toggle the WordPress Admin Bar on and off with this Chrome Extension",
   "type": "module",
   "scripts": {
     "dev": "vite build --watch",
