@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "WordPress Admin Bar Control",
+  "name": "WordPress Admin Bar Toggle",
   "short_name": "WP Admin Bar Hider",
   "version": "2.0.0",
   "description": "Hide & show the WordPress admin bar with one easy click! Modern Manifest V3 extension.",

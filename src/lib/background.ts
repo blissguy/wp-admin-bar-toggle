@@ -1,5 +1,5 @@
 /**
- * WordPress Admin Bar Control - Background Service Worker
+ * WordPress Admin Bar T - Background Service Worker
  * Modern ES2022+ implementation with Manifest V3 APIs and TypeScript
  */
 
